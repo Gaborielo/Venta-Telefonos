@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Teléfonos disponibles{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h2 class="mb-4 text-center fw-bold">Catálogo de Teléfonos</h2>
+
+    {% if telefonos %}
+        <div class="row g-4">
+            {% for telefono in telefonos %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm border-0 rounded-4">
+
+                        {% if telefono.imagen %}
+                            <img src="{{ telefono.imagen.url }}"
+                                 class="card-img-top rounded-top-4"
+                                 style="height: 200px; object-fit: cover;"
+                                 alt="{{ telefono.modelo }}">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center bg-secondary text-white"
+                                 style="height: 200px;">
+                                Sin imagen
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="fw-bold mb-1">
+                                {{ telefono.marca }} - {{ telefono.modelo }}
+                            </h6>
+
+                            <p class="text-muted small mb-2">
+                                {{ telefono.descripcion|truncatechars:60 }}
+                            </p>
+
+                            <p class="fw-bold text-success mb-3">
+                                ${{ telefono.precio }}
+                            </p>
+
+                            <div class="mt-auto d-grid gap-2">
+    <a href="{% url 'editar_telefono' telefono.id %}"
+       class="btn btn-outline-warning btn-sm">
+        Editar
+    </a>
+
+    <a href="{% url 'eliminar_telefono' telefono.id %}"
+       class="btn btn-outline-danger btn-sm">
+        Eliminar
+    </a>
+</div>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            No hay teléfonos registrados.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

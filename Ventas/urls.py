@@ -3,8 +3,8 @@ from .views import (crear_pedido,lista_telefonos,crear_telefono,editar_telefono,
 )
 
 urlpatterns = [
+    path('', lista_telefonos, name='lista_telefonos'),
     path('pedido/nuevo/', crear_pedido, name='crear_pedido'),
-
     path('telefonos/', lista_telefonos, name='lista_telefonos'),
     path('telefonos/nuevo/', crear_telefono, name='crear_telefono'),
     path('telefonos/editar/<int:id>/', editar_telefono, name='editar_telefono'),
