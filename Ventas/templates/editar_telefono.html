@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Teléfono{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-header bg-dark text-white text-center">
+                    <h4 class="mb-0">Editar Teléfono</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Marca -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Marca</label>
+                            <select name="marca" class="form-select" required>
+                                {% for marca in marcas %}
+                                    <option value="{{ marca.id }}"
+                                        {% if marca.id == telefono.marca.id %}selected{% endif %}>
+                                        {{ marca.nombre }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Modelo -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Modelo</label>
+                            <input type="text"
+                                   name="modelo"
+                                   class="form-control"
+                                   value="{{ telefono.modelo }}"
+                                   required>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Precio</label>
+                            <input type="number"
+                                   name="precio"
+                                   class="form-control"
+                                   step="0.01"
+                                   min="0"
+                                   value="{{ telefono.precio }}"
+                                   required>
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Descripción</label>
+                            <textarea name="descripcion"
+                                      class="form-control"
+                                      rows="3"
+                                      required>{{ telefono.descripcion }}</textarea>
+                        </div>
+
+                        <!-- Imagen actual -->
+                        {% if telefono.imagen %}
+                            <div class="mb-3 text-center">
+                                <p class="fw-semibold mb-2">Imagen actual</p>
+                                <img src="{{ telefono.imagen.url }}"
+                                     class="img-fluid rounded shadow-sm"
+                                     style="max-height: 200px;">
+                            </div>
+                        {% endif %}
+
+                        <!-- Nueva imagen -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Cambiar imagen</label>
+                            <input type="file" name="imagen" class="form-control">
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'lista_telefonos' %}" class="btn btn-outline-secondary">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning px-4">
+                                Guardar cambios
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
