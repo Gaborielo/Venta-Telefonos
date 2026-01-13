@@ -39,15 +39,21 @@
                             </p>
 
                             <div class="mt-auto d-grid gap-2">
-    <a href="{% url 'editar_telefono' telefono.id %}"
-       class="btn btn-outline-warning btn-sm">
-        Editar
-    </a>
 
-    <a href="{% url 'eliminar_telefono' telefono.id %}"
-       class="btn btn-outline-danger btn-sm">
-        Eliminar
-    </a>
+    {% if perms.app.change_telefono %}
+        <a href="{% url 'editar_telefono' telefono.id %}"
+           class="btn btn-outline-warning btn-sm">
+            Editar
+        </a>
+    {% endif %}
+
+    {% if perms.app.delete_telefono %}
+        <a href="{% url 'eliminar_telefono' telefono.id %}"
+           class="btn btn-outline-danger btn-sm">
+            Eliminar
+        </a>
+    {% endif %}
+
 </div>
                         </div>
 
